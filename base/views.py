@@ -3,17 +3,15 @@ from django.db.models import Q
 from .models import Room, Topic
 from .forms import RoomForm
 
-# Create your views here.
-
-# rooms = [
-#     {'id':1, 'name': 'Lets learn python!'},
-#     {'id':2, 'name': 'Design With Me!'},
-#     {'id':3, 'name': 'Js Developers'}
-#     ]
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+    context = {}
+    return render(request, "base/login_register.html", context)
 
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-
 
     rooms = Room.objects.filter(
         Q(topic__name__icontains=q) |
