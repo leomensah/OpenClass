@@ -37,6 +37,7 @@ def logoutUser(request):
     logout(request)
     return redirect('home')
 
+
 def registerPage(request):
     form = MyUserCreationForm()
 
@@ -61,11 +62,17 @@ def home(request):
         Q(topic__name__icontains=q) |
         Q(name__icontains=q) |
         Q(description__icontains=q)
-        )
-    topics = Topic.objects.all()
+    )
+
+    topics = Topic.objects.all()[0:5]
     room_count = rooms.count()
-    context = {'rooms': rooms, 'topics': topics, 'room_count':room_count}
+    room_messages = Message.objects.filter(
+        Q(room__topic__name__icontains=q))[0:3]
+
+    context = {'rooms': rooms, 'topics': topics,
+               'room_count': room_count, 'room_messages': room_messages}
     return render(request, 'base/home.html', context)
+
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
@@ -84,6 +91,7 @@ def room(request, pk):
     context = {'room': room, 'room_messages': room_messages,
                'participants': participants}
     return render(request, 'base/room.html', context)
+
 
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
