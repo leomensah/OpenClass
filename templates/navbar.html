@@ -2,8 +2,8 @@
 <header class="header header--loggedIn">
     <div class="container">
         <a href="{% url 'home' %}" class="header__logo">
-            <img src="{% static 'images/logo.svg' %}" />
-            <h1>StudyBuddy</h1>
+            {% comment %} <img src="{% static 'images/logo.png' %}" /> {% endcomment %}
+            <h1>OPEN CLASS</h1>
         </a>
         <form class="header__search" method="GET" action="{% url 'home' %}">
             <label>
@@ -68,12 +68,3 @@
         </nav>
     </div>
 </header>
-
-
-
-<!-- {% if request.user.is_authenticated %}
-<p>Hello {{request.user}}</p>
-<a href="{% url 'logout' %}">Logout</a>
-{% else %}
-<a href="{% url 'login' %}">Login</a>
-{% endif %} -->
